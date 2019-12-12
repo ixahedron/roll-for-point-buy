@@ -1,0 +1,11 @@
+{
+  "name": "roll-point-buy-bot",
+  "version": "1.0.0",
+  "description": "Roll 4d6d1 and get the point buy cost!",
+  "main": "bot.js",
+  "author": "Ilona P.",
+  "dependencies": {
+    "discord.io": "https://github.com/woor/discord.io/tarball/gateway_v6",
+    "winston": "^3.2.1"
+  }
+}
