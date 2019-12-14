@@ -2,7 +2,7 @@
 
 ### Want to use this?
 
-Add the bot to your server using this link:
+Add the bot to your server using this link:  
 https://discordapp.com/oauth2/authorize?&client_id=209040908673482753&scope=bot&permissions=0
 
 ### Features
@@ -15,7 +15,7 @@ It's a really simple bot.
 
 `/pb 6 24 40` -- rolls 4d6d1 6 times, rerolling until the point buy cost is at least 24 and at most 40.
 
-`/pb 6 27` -- each successive argument is optional, i.e. you could input this to receive a roll with PB cost if at least 27.
+`/pb 6 27` -- each successive argument is optional, i.e. you could input this to receive a roll with PB cost of at least 27.
 
 ---
 
