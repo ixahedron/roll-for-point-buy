@@ -12,6 +12,7 @@ bot.on('ready', function (evt) {
     console.log('Connected');
     console.log('Logged in as: ');
     console.log(bot.username + ' - (' + bot.id + ')');
+    console.log('Running in: ' + bot.guilds.size + ' server(s).');
 });
 
 
