@@ -31,6 +31,8 @@ function pretty_print_msg(roll_obj) {
     return roll_obj.stats + '. Point buy value: ' + roll_obj.pb_sum;
 }
 
+var help_message = "Use /pb to roll 4d6 drop lowest 6 times.\nSpecify three or less numbers to bound the roll, like this: /pb number_of_abilities min_accepted_cost max_accepted_cost.\nE.g. '/pb 6 24 30' is what I use for my games."
+
 bot.on('message', function (user, userID, channelID, message, evt) {
 
     // Listen for messages starting with /pb or /help
@@ -44,6 +46,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             case 'pb':
 
                 var n = 6;
+                msg = '';
                 
                 if (!args) {
 
@@ -60,46 +63,60 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                     n = args[0];
                     if (n > 30) {
                         n = 30;
+                        msg = 'Maximum amount of stats for one batch is arbitrarily set to 30. ';
                     }
-                }
-                args.splice(0,1);
-                
-                // establish default boundaries incase not all are provided. Dummy values are dummy.
-                var min = n*(-99);
-                var max = n*99;
 
-                if (!isNaN(args[0])) {
-                    min = args[0];
-                }
-                args.splice(0,1);
-                if (!isNaN(args[0])) {
-                    max = args[0];
-                }
+                    args.splice(0,1);
 
-                // swap to not go into an endless cycle
-                if (min > max){
-                    var tmp;
-                    tmp = min;
-                    min = max;
-                    max = tmp;
-                }
+                    // establish default boundaries incase not all are provided. Dummy values are dummy.
+                    var min = n*(-99);
+                    var max = n*99;
 
-                // send a pretty printed message.
-                bot.sendMessage({
-                    to: channelID,
-                    message: pretty_print_msg(roll_bounded(n, min, max))
-                });
+                    if (!isNaN(args[0])) {
+                        min = args[0];
+                    }
+
+                    args.splice(0,1);
+
+                    if (!isNaN(args[0])) {
+                        max = args[0];
+                    }
+
+                    // swap to not go into an endless cycle
+                    if (min > max){
+                        var tmp;
+                        tmp = min;
+                        min = max;
+                        max = tmp;
+                    }
+
+                    // send a pretty printed message.
+                    bot.sendMessage({
+                        to: channelID,
+                        message: msg + pretty_print_msg(roll_bounded(n, min, max))
+                    });
+                } else {
+                    bot.sendMessage({
+                        to: channelID,
+                        message: help_message
+                    });
+                }
                 break;
             case 'pbi': // just for my own games since that's what I use
                 bot.sendMessage({
                     to: channelID,
-                    message: pretty_print_msg(roll_bounded(6, 24, 40))
+                    message: pretty_print_msg(roll_bounded(6, 24, 30))
                 });
                 break;
+            case 'pbhelp':
+                bot.sendMessage({
+                    to: channelID,
+                    message: help_message
+                });
             case 'help':
                 bot.sendMessage({
                     to: channelID,
-                    message: "Use /pb to roll 4d6 drop lowest 6 times.\nSpecify three or less numbers to bound the roll, like this: /pb number_of_abilities min_accepted_cost max_accepted_cost.\nE.g. '/pb 6 24 40' is what I use for my game."
+                    message: help_message
                 });
         }
 
