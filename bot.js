@@ -35,7 +35,7 @@ function pretty_print_msg(roll_obj) {
 
 function process_pb(args) {
 
-                if (!args) {
+                if (!args || !args.length) {
                     return pretty_print_msg(roll.roll(DEFAULT_N))
                 }
 
@@ -98,7 +98,6 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                     to: channelID,
                     message: process_pb(args)
                 });
-
                 break;
             case 'pbi': // just for my own games since that's what I use
                 bot.sendMessage({
