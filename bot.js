@@ -50,8 +50,8 @@ function process_pb(args) {
           res = '';
 
           var i;
-          for (i = 0; i < t; i++) {
-            res += "#" + (i+1) + ": " + pb_once(args) + "\n";
+          for (i = 1; i <= t; i++) {
+            res += "#" + i + ": " + pb_once(Array.from(args)) + "\n";
           }
 
           return res;
