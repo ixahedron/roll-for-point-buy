@@ -16,7 +16,8 @@ bot.on('ready', function (evt) {
 });
 
 var DEFAULT_N = 6;
-var HELP_MESSAGE = "Use /pb to roll 4d6 drop lowest 6 times.\nSpecify three or less numbers to bound the roll, like this: /pb number_of_abilities min_accepted_cost max_accepted_cost.\nE.g. '/pb 6 24 30' is what I use for my games.\nAnother option is to repeat rolls with a syntax like this: /pb repeat number_of_times number_of_abilities min_accepted_cost max_accepted_cost. E.g. '/pb repeat 3' would roll for standard six abilities three times."
+//var HELP_MESSAGE = "Use /pb to roll 4d6 drop lowest 6 times.\nSpecify three or less numbers to bound the roll, like this: /pb number_of_abilities min_accepted_cost max_accepted_cost.\nE.g. '/pb 6 24 30' is what I use for my games.\nAnother option is to repeat rolls with a syntax like this: /pb repeat number_of_times number_of_abilities min_accepted_cost max_accepted_cost. E.g. '/pb repeat 3' would roll for standard six abilities three times."
+var HELP_MESSAGE = "Use /pb to roll 4d6 drop lowest 6 times.\nSpecify three or less numbers to bound the roll, like this: /pb number_of_abilities min_accepted_cost max_accepted_cost.\nE.g. '/pb 6 24 30' is what I use for my games."
 
 // continue to reroll until the result is within provided boundaries
 function roll_bounded(n, min, max) {
