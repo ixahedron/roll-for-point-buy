@@ -36,7 +36,7 @@ function pretty_print_msg(roll_obj) {
 function process_pb(args) {
 
     if (!args || !args.length) {
-        return pretty_print_msg(roll.roll(default_n))
+        return pretty_print_msg(roll.roll(DEFAULT_N))
     }
 
     if (args[0] == 'repeat') {
