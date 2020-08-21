@@ -60,6 +60,10 @@ function process_pb(args) {
 }
 
 function pb_once(args) {
+    
+    if (!args || !args.length) {
+        return pretty_print_msg(roll.roll(DEFAULT_N))
+    }
 
     // check args are not NaN
     if (!isNaN(args[0])) {
