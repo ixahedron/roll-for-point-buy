@@ -37,27 +37,26 @@ function process_pb(args) {
 
     if (!args || !args.length) {
         return pretty_print_msg(roll.roll(default_n))
-    } else {
-
-        if args[0] == 'repeat' {
-            if (isNaN(args[1])) {
-                return HELP_MESSAGE
-            } else {
-              n = args[1];
-              args.splice(0,2);
-
-              res = '';
-
-              var i;
-              for (i = 0; i < n; i++) {
-                res += "#" + i + ": " + pb_once(args) + "\n";
-              }
-
-              return res;
-
-            }
-        } else { pb_once(args) }
     }
+
+    if (args[0] == 'repeat') {
+        if (isNaN(args[1])) {
+            return HELP_MESSAGE
+        } else {
+          n = args[1];
+          args.splice(0,2);
+
+          res = '';
+
+          var i;
+          for (i = 0; i < n; i++) {
+            res += "#" + i + ": " + pb_once(args) + "\n";
+          }
+
+          return res;
+
+        }
+    } else { pb_once(args) }
 }
 
 function pb_once(args) {
