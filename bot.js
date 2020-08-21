@@ -44,14 +44,14 @@ function process_pb(args) {
         if (isNaN(args[1])) {
             return HELP_MESSAGE
         } else {
-          n = args[1];
+          t = args[1];
           args.splice(0,2);
 
           res = '';
 
           var i;
-          for (i = 0; i < n; i++) {
-            res += "#" + i + ": " + pb_once(args) + "\n";
+          for (i = 0; i < t; i++) {
+            res += "#" + (i+1) + ": " + pb_once(args) + "\n";
           }
 
           return res;
