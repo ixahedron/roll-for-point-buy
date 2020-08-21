@@ -35,50 +35,73 @@ function pretty_print_msg(roll_obj) {
 
 function process_pb(args) {
 
-                if (!args || !args.length) {
-                    return pretty_print_msg(roll.roll(DEFAULT_N))
-                }
+    if (!args || !args.length) {
+        return pretty_print_msg(roll.roll(default_n))
+    }
 
-                // check args are not NaN
-                if (!isNaN(args[0])) {
+    if args[0] == 'repeat' {
+        if (isNaN(args[1])) {
+            return HELP_MESSAGE
+        } else {
+          n = args[1];
+          args.splice(0,2);
 
-                    msg = '';
-                    
-                    n = args[0];
-                    if (n > 30) {
-                        n = 30;
-                        msg = 'Maximum amount of stats for one batch is arbitrarily set to 30. ';
-                    }
+          res = '';
 
-                    args.splice(0,1);
+          var i;
+          for (i = 0; i < n; i++) {
+            res += "#" + i + ": " + pb_once(args) + "\n";
+          }
 
-                    // establish default boundaries incase not all are provided. Dummy values are dummy.
-                    var min = n*(-99);
-                    var max = n*99;
+          return res;
 
-                    if (!isNaN(args[0])) {
-                        min = args[0];
-                    }
+        }
+    } else { pb_once(args) }
 
-                    args.splice(0,1);
+}
 
-                    if (!isNaN(args[0])) {
-                        max = args[0];
-                    }
+function pb_once(args) {
 
-                    // swap to not go into an endless cycle
-                    if (min > max){
-                        var tmp;
-                        tmp = min;
-                        min = max;
-                        max = tmp;
-                    }
+    // check args are not NaN
+    if (!isNaN(args[0])) {
 
-                    // send a pretty printed message.
-                    return (msg + pretty_print_msg(roll_bounded(n, min, max)))
-                } else {
-                    return HELP_MESSAGE
-                }
+        msg = '';
+        
+        n = args[0];
+        if (n > 30) {
+            n = 30;
+            msg = 'Maximum amount of stats for one batch is arbitrarily set to 30. ';
+        }
+
+        args.splice(0,1);
+
+        // establish default boundaries incase not all are provided. Dummy values are dummy.
+        var min = n*(-99);
+        var max = n*99;
+
+        if (!isNaN(args[0])) {
+            min = args[0];
+        }
+
+        args.splice(0,1);
+
+        if (!isNaN(args[0])) {
+            max = args[0];
+        }
+
+        // swap to not go into an endless cycle
+        if (min > max){
+            var tmp;
+            tmp = min;
+            min = max;
+            max = tmp;
+        }
+
+        // send a pretty printed message.
+        return (msg + pretty_print_msg(roll_bounded(n, min, max)))
+    } else {
+        return HELP_MESSAGE
+    }
 
 }
 
