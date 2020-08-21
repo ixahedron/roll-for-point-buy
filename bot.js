@@ -15,6 +15,8 @@ bot.on('ready', function (evt) {
     console.log('Running in: ' + Object.keys(bot.servers).length + ' server(s).');
 });
 
+var DEFAULT_N = 6;
+var HELP_MESSAGE = "Use /pb to roll 4d6 drop lowest 6 times.\nSpecify three or less numbers to bound the roll, like this: /pb number_of_abilities min_accepted_cost max_accepted_cost.\nE.g. '/pb 6 24 30' is what I use for my games."
 
 // continue to reroll until the result is within provided boundaries
 function roll_bounded(n, min, max) {
@@ -31,35 +33,17 @@ function pretty_print_msg(roll_obj) {
     return roll_obj.stats + '. Point buy value: ' + roll_obj.pb_sum;
 }
 
-var help_message = "Use /pb to roll 4d6 drop lowest 6 times.\nSpecify three or less numbers to bound the roll, like this: /pb number_of_abilities min_accepted_cost max_accepted_cost.\nE.g. '/pb 6 24 30' is what I use for my games."
+function process_pb(args) {
 
-bot.on('message', function (user, userID, channelID, message, evt) {
-
-    // Listen for messages starting with /pb or /help
-    if (message.substring(0, 1) == '/') {
-
-        var args = message.substring(1).split(' ');
-        var cmd = args[0];
-        args = args.splice(1);
-        
-        switch(cmd) {
-            case 'pb':
-
-                var n = 6;
-                msg = '';
-                
                 if (!args) {
-
-                    bot.sendMessage({
-                        to: channelID,
-                        message: pretty_print_msg(roll.roll(n))
-                    });
-                    break;
-
+                    return pretty_print_msg(roll.roll(DEFAULT_N))
                 }
 
                 // check args are not NaN
                 if (!isNaN(args[0])) {
+
+                    msg = '';
+                    
                     n = args[0];
                     if (n > 30) {
                         n = 30;
@@ -91,16 +75,30 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                     }
 
                     // send a pretty printed message.
-                    bot.sendMessage({
-                        to: channelID,
-                        message: msg + pretty_print_msg(roll_bounded(n, min, max))
-                    });
+                    return (msg + pretty_print_msg(roll_bounded(n, min, max)))
                 } else {
-                    bot.sendMessage({
-                        to: channelID,
-                        message: help_message
-                    });
+                    return HELP_MESSAGE
                 }
+
+}
+
+
+bot.on('message', function (user, userID, channelID, message, evt) {
+
+    // Listen for messages starting with /pb or /help
+    if (message.substring(0, 1) == '/') {
+
+        var args = message.substring(1).split(' ');
+        var cmd = args[0];
+        args = args.splice(1);
+        
+        switch(cmd) {
+            case 'pb':
+                bot.sendMessage({
+                    to: channelID,
+                    message: process_pb(args)
+                });
+
                 break;
             case 'pbi': // just for my own games since that's what I use
                 bot.sendMessage({
@@ -111,12 +109,12 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             case 'pbhelp':
                 bot.sendMessage({
                     to: channelID,
-                    message: help_message
+                    message: HELP_MESSAGE
                 });
             case 'help':
                 bot.sendMessage({
                     to: channelID,
-                    message: help_message
+                    message: HELP_MESSAGE
                 });
         }
 
