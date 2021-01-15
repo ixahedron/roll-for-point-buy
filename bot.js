@@ -62,7 +62,7 @@ function process_pb(args) {
           return res;
 
         }
-    } else { pb_once(args) }
+    } else { return pb_once(args) }
 }
 
 function pb_once(args) {
