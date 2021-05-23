@@ -2,8 +2,7 @@
 
 ### Want to use this?
 
-Add the bot to your server using this link:  
-https://discord.com/oauth2/authorize?client_id=644350308872486922&scope=bot&permissions=0
+Add the bot to your server using [this link](https://discord.com/oauth2/authorize?client_id=644350308872486922&scope=bot&permissions=0).
 
 ### Features
 
