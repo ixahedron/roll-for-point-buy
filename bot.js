@@ -1,22 +1,18 @@
-var Discord = require('discord.io');
+const Discord = require('discord.js');
+require('dotenv').config();
 //var auth = require('./auth.json');
 var roll = require('./roll.js')
 
 // Initialize Discord Bot
-var bot = new Discord.Client({
-//    token: auth.token,
-    token: process.env.BOT_TOKEN,
-    autorun: true
-});
-bot.on('ready', function (evt) {
+var bot = new Discord.Client();
+bot.login(process.env.BOT_TOKEN);
+bot.on('ready', () => {
     console.log('Connected');
-    console.log('Logged in as: ');
-    console.log(bot.username + ' - (' + bot.id + ')');
-    console.log('Running in: ' + Object.keys(bot.servers).length + ' server(s).');
+    console.log('Logged in as: ' + bot.user);
 });
 
-var DEFAULT_N = 6;
-var HELP_MESSAGE = "Use /pb to roll 4d6 drop lowest 6 times.\n\
+const DEFAULT_N = 6;
+const HELP_MESSAGE = "Use /pb to roll 4d6 drop lowest 6 times.\n\
 \Specify three or less numbers to bound the roll, like this:\
 \`/pb number_of_abilities min_accepted_cost max_accepted_cost`.\n\
 \E.g. `/pb 6 24 30` is what I use for my games.\n\
@@ -26,13 +22,11 @@ var HELP_MESSAGE = "Use /pb to roll 4d6 drop lowest 6 times.\n\
 
 // continue to reroll until the result is within provided boundaries
 function roll_bounded(n, min, max) {
-    
     do {
       roll_result = roll.roll(n);
     } while ((roll_result.pb_sum < min) || (roll_result.pb_sum > max));
 
     return roll_result;
-
 }
 
 function pretty_print_msg(roll_obj) {
@@ -115,39 +109,27 @@ function pb_once(args) {
 }
 
 
-bot.on('message', function (user, userID, channelID, message, evt) {
+bot.on('message', (msg) => {
 
     // Listen for messages starting with /pb or /help
-    if (message.substring(0, 1) == '/') {
+    if (msg.content.substring(0, 1) == '/') {
 
-        var args = message.substring(1).split(' ');
+        var args = msg.content.substring(1).split(' ');
         var cmd = args[0];
         args = args.splice(1);
         
         switch(cmd) {
             case 'pb':
-                bot.sendMessage({
-                    to: channelID,
-                    message: process_pb(args)
-                });
+                msg.channel.send(process_pb(args));
                 break;
             case 'pbi': // just for my own games since that's what I use
-                bot.sendMessage({
-                    to: channelID,
-                    message: pretty_print_msg(roll_bounded(6, 24, 30))
-                });
+                msg.channel.send(pretty_print_msg(roll_bounded(6, 24, 30)));
                 break;
             case 'pbhelp':
-                bot.sendMessage({
-                    to: channelID,
-                    message: HELP_MESSAGE
-                });
+                msg.channel.send(HELP_MESSAGE);
                 break;
             case 'help':
-                bot.sendMessage({
-                    to: channelID,
-                    message: HELP_MESSAGE
-                });
+                msg.channel.send(HELP_MESSAGE);
                 break;
         }
 
