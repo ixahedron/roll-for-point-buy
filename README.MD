@@ -6,19 +6,15 @@ Add the bot to your server using [this link](https://discord.com/oauth2/authoriz
 
 ### Features
 
-It's a really simple bot.
+It's a really simple bot, which uses mostly self-explanatory slash-commands.
 
-`/help` -- prints instructions.
+`/pb once` — rolls 4d6, dropping the lowest die, 6 times, and sums up their point buy costs.
 
-`/pb` -- rolls 4d6, dropping the lowest die, 6 times, and sums up their point buy costs.
-
-`/pb 6 24 40` -- rolls 4d6d1 6 times, rerolling until the point buy cost is at least 24 and at most 40.
-
-`/pb 6 27` -- each successive argument is optional, i.e. you could input this to receive a roll with PB cost of at least 27.
+`/pb once 6 24 40` — rolls 4d6d1 6 times, rerolling until the point buy cost is at least 24 and at most 40.
 
 Another option is to repeat rolls with the following syntax:
 
-`/pb repeat number_of_times number_of_abilities min_accepted_cost max_accepted_cost`
+`/pb repeat number_of_repeats number_of_abilities min_accepted_cost max_accepted_cost`
 
 E.g. `/pb repeat 3` would roll for standard six abilities three times.
 

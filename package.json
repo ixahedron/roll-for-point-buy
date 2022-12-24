@@ -1,6 +1,6 @@
 {
   "name": "roll-point-buy-bot",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Roll 4d6d1 and get the point buy cost!",
   "main": "bot.js",
   "scripts": {
@@ -8,7 +8,16 @@
   },
   "author": "Ilona P.",
   "dependencies": {
-    "discord.js": "^12.5.3",
+    "discord.js": "^14.7.1",
     "dotenv": "^10.0.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ixahedron/roll-for-point-buy.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ixahedron/roll-for-point-buy/issues"
+  },
+  "homepage": "https://github.com/ixahedron/roll-for-point-buy#readme"
 }
